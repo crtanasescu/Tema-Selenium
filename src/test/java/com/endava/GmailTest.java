@@ -11,6 +11,8 @@ import org.openqa.selenium.firefox.FirefoxDriver;
 
 import java.util.concurrent.TimeUnit;
 
+import static org.junit.Assert.assertEquals;
+
 /**
  * Created by crtanasescu on 7/29/2016.
  */
@@ -45,7 +47,7 @@ public class GmailTest {
         WebElement emailField = webDriver.findElement(By.xpath("//input[@id=\"Email\"]"));
         emailField.sendKeys("endavaselenium");
 
-        
+
         //get the next button field
         WebElement nextButton = webDriver.findElement(By.xpath("//input[@id=\"next\"]"));
         nextButton.click();
@@ -77,6 +79,45 @@ public class GmailTest {
 
         WebElement pressSend = webDriver.findElement(By.xpath( "//div[@aria-label='Send \u202A(Ctrl-Enter)\u202C']"));
         pressSend.click();
+
+
+//verificare e-mail primit
+
+        //click pe Sent Mail
+        WebElement clickSentMail = webDriver.findElement(By.xpath("//a[@title='Sent Mail']"));
+        clickSentMail.click();
+
+
+        //WebElement verifyEmailSent = webDriver.findElement(By.("cristina.tanasescu93@gmail.com"));
+
+        //click pe ultimul e-mail primit
+        WebElement clickLastMail = webDriver.findElement(By.xpath("//div[@class='av']"));
+        clickLastMail.click();
+
+
+        //verificare Body
+        WebElement verifyText = webDriver.findElement(By.xpath("//div[@role='listitem']//div[@dir='ltr']"));
+        String bodyToVeridy = verifyText.getText();
+
+        assertEquals("TEST messaje", bodyToVeridy);
+
+
+
+        //verificare Sender
+        WebElement verifySender = webDriver.findElement(By.xpath("//span[@class='go']"));
+        String senderToVerify = verifySender.getText();
+
+        assertEquals("<endavaselenium@gmail.com>", senderToVerify);
+
+
+        //verificare Subiect
+        WebElement verifySubject = webDriver.findElement(By.xpath("//div[@class='ha']//h2[@tabindex='-1']"));
+        String subjectToVerify = verifySubject.getText();
+
+        assertEquals("TEST", subjectToVerify);
+
+
+
 
     }
 
